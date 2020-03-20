@@ -1,12 +1,13 @@
-const ping = require("./ping")
-const random = require("./random")
-const eightball = require("./eightball")
-const help = require("./help")
-const userinfo = require("./userinfo")
-const rps = require("./rps")
-const numGuess = require("./numGuess")
-const thisdot = require("./thisdot")
-const remind = require("./reminder")
+const ping = require("./Information/ping")
+const random = require("./Fun/random")
+const eightball = require("./Games/eightball")
+const help = require("./Information/help")
+const userinfo = require("./Information/userinfo")
+const rps = require("./Games/rps")
+const numGuess = require("./Games/numGuess")
+const thisdot = require("./Fun/thisdot")
+const remind = require("./Information/reminder")
+
 // TODO: coming soon
 // const {subscribe, unsubscribe} = require("./roleHandling")
 
