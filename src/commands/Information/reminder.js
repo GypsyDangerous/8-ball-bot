@@ -1,10 +1,10 @@
 const days = millis => (millis * (60 * 60 * 24 * 1000))
 
-const {isNumeric} = require("./functions")
+const {isNumeric} = require("../../functions")
 const fs = require("fs")
 const path = require("path")
 
-const jsonPath = path.join(__dirname, '..', 'commands', 'reminders.json');
+const jsonPath = path.join(__dirname, '..', "Information", 'reminders.json');
 const reminders = JSON.parse(fs.readFileSync(jsonPath, "utf-8"))
 
 // console.log((reminders)) 

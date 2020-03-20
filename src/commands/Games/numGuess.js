@@ -1,4 +1,4 @@
-const { isNumeric } = require("./functions")
+const { isNumeric } = require("../../functions")
 
 let high = 100
 let status = false

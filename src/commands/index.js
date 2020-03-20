@@ -7,6 +7,7 @@ const rps = require("./Games/rps")
 const numGuess = require("./Games/numGuess")
 const thisdot = require("./Fun/thisdot")
 const remind = require("./Information/reminder")
+const {clear} = require("./Moderation")
 
 // TODO: coming soon
 // const {subscribe, unsubscribe} = require("./roleHandling")
@@ -95,6 +96,14 @@ const functions = {
             description: "get bot uptime",
             usage: [`${prefix}uptime`],
             category: "Information"
+        }
+    },
+    "clear": {
+        execute: clear,
+        helptext: {
+            description: "deletes all messages up to a given amount (100 max)",
+            usage: [prefix+"clear [amount]"],
+            category: "Moderation"
         }
     },
     "help": {

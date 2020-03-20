@@ -34,7 +34,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
     }
     if (reaction.message.id === "690149099608997998"){
         const reactor = await reaction.message.guild.members.fetch(user.id)
-        if (console.log(reactor.roles._roles.array().includes("690449077825175552"))){
+        if (!(reactor.roles._roles.array().includes("690449077825175552"))){
             reactor.roles.remove("690449077825175552")
         }
     }

@@ -1,4 +1,4 @@
-const { isNumeric, randomChoice } = require("./functions")
+const { isNumeric, randomChoice } = require("../../functions")
 const { MessageEmbed } = require("discord.js")
 
 
@@ -13,8 +13,7 @@ module.exports = async (msg, {args}) => {
     const playerMove = args[0].toLowerCase()
 
     const botMove = randomChoice(options)
-    // msg.channel.send(botMove)
-    
+
     const p1 = options.indexOf(playerMove)+1
     const p2 = options.indexOf(botMove)+1
     let str = "We Tied"
