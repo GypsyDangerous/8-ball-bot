@@ -1,4 +1,5 @@
 const discord = require("discord.js")
+const {formatFromNow} = require("../../functions")
 
 module.exports = async (msg, {args}) => {
     let member
@@ -19,8 +20,8 @@ module.exports = async (msg, {args}) => {
         member = (await msg.guild.members.fetch({query: args.join(" ")})).array()[0]
     }
 
-    const joined = Intl.DateTimeFormat("en-US").format(member.joinedAt)
-    const created = Intl.DateTimeFormat("en-US").format(member.user.createdAt)
+    const joined = formatFromNow(member.joinedAt)
+    const created = formatFromNow(member.user.createdAt)
 
     const avatar = (member.user.displayAvatarURL())
 
@@ -39,10 +40,10 @@ module.exports = async (msg, {args}) => {
         .addField("status",  member.displayName + " is "+member.presence.status)
         .addFields(
             {name: "Display Name", value: member.displayName, inline},
-            {name: "Joined at", value: joined, inline},
-            {name: "Roles", value: userRoles, inline},
-            {name: "Bot", value: member.user.bot ? "This user is a bot, Beep Boop" : "This user is not a bot", inline},
-            {name: "account created", value: created, inline})
+            { name: "Joined at", value: (joined), inline},
+            {name: `Roles [${userRoles.length}]`, value: userRoles, inline},
+            {name: "account created", value: created, inline},
+            {name: "Bot", value: member.user.bot ? "This user is a bot, Beep Boop" : "This user is not a bot", inline})
         .setAuthor(member.user.tag, avatar)
 
     msg.channel.send(embed)

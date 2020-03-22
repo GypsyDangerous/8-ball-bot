@@ -1,6 +1,6 @@
 const {isNumeric} = require("../../functions")
 
-module.exports = async (msg, {args}, client) => {
+module.exports = async (msg, {args}, client, config) => {
 
     // let amount = Math.min(Math.max(Number(args.shift()), 1), 100)
     let amount = Number(args.shift())
@@ -15,5 +15,7 @@ module.exports = async (msg, {args}, client) => {
 
     const toDelete = await msg.channel.messages.fetch({ limit: amount+1 })
     msg.channel.bulkDelete(toDelete) // Bulk deletes all messages that have been fetched and are not older than 14 days (due to the Discord API)
-    msg.channel.send(`cleared ${amount} messages`)
+    if(config.verboseModeration){
+        msg.channel.send(`cleared ${amount} messages`)
+    }
 }

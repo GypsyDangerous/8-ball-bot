@@ -5,14 +5,16 @@ const help = require("./Information/help")
 const userinfo = require("./Information/userinfo")
 const rps = require("./Games/rps")
 const numGuess = require("./Games/numGuess")
-const thisdot = require("./Fun/thisdot")
 const remind = require("./Information/reminder")
-const {clear} = require("./Moderation")
+const {clear, thisdot, settings, mute, unmute} = require("./Moderation")
+const fs = require("fs")
+const path = require("path")
+
+const configPath = path.join(__dirname, "..", "..", "config.json")
+
 
 // TODO: coming soon
 // const {subscribe, unsubscribe} = require("./roleHandling")
-
-const prefix = "!"
 
 const moment = require("moment");
 require("moment-duration-format");
@@ -25,7 +27,7 @@ const uptime = async (msg, args, client) => await msg.channel.send("Uptime: " + 
 // console.log(intensity);
 // // {neg: 0.0, neu: 0.299, pos: 0.701, compound: 0.8545}
 
-const functions = {
+const functions = prefix => {return {
     "ping": {
         execute: ping, 
         helptext: {
@@ -106,6 +108,30 @@ const functions = {
             category: "Moderation"
         }
     },
+    "settings": {
+        execute: settings,
+        helptext: {
+            description: "manage bot settings for this server",
+            usage: [prefix + "settings"],
+            category: "Moderation"
+        }
+    },
+    "mute": {
+        execute: mute,
+        helptext: {
+            description: "mute the given user",
+            usage: [prefix + "mute [user]"],
+            category: "Moderation"
+        }
+    },
+    "unmute": {
+        execute: unmute,
+        helptext: {
+            description: "unmute given user",
+            usage: [prefix + "unmute [user]"],
+            category: "Moderation"
+        }
+    },
     "help": {
         execute: help, 
         helptext: {
@@ -114,7 +140,7 @@ const functions = {
             category: "Information"
         }
     }
-}
+}}
 
 
 
@@ -122,13 +148,26 @@ module.exports = async (msg, client) => {
     const { content, guild: { id: guildId }, channel: { name, id } } = msg
     if (msg.author.bot) return
 
+    const configFile = JSON.parse(fs.readFileSync(configPath))
+    let botConfig = configFile[msg.guild.id]
+    if(!botConfig){
+        botConfig = configFile[msg.guild.id] = {
+            prefix: "!",
+            botTalkId: ""
+        }
+        fs.writeFileSync(configPath, JSON.stringify(configFile))
+    }
+    const prefix = botConfig.prefix
+    const botTalk = botConfig.botTalkId
+
     if(msg.content.startsWith(prefix)){
-        if (guildId == "689872791331405900" && msg.channel.id == "689872895849267302") {
+        if (!botTalk || msg.channel.id == botTalk) {
             const args = msg.content.split(" ")
             const command = args.shift().substr(prefix.length).toLowerCase()
-            const func = functions[command]
+            const allFunctions = functions(prefix)
+            const func = allFunctions[command]
             if(func){
-                func.execute(msg, {args, functions}, client)
+                func.execute(msg, { args, functions: allFunctions}, client, botConfig)
             }
         }
     }

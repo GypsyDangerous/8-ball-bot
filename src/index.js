@@ -1,8 +1,11 @@
 const discord = require("discord.js")
 const commandHandler = require("./commands")
-
-
 require("dotenv").config()
+
+const fs = require("fs")
+const path = require("path")
+
+const configPath = path.join(__dirname, "..", "..", "config.json")
 
 const client = new discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 
@@ -13,8 +16,6 @@ client.once("ready", async () => {
 
 client.login(process.env.BOT_TOKEN) 
 
-
-// client.on('message', (message) => antiSpam.message(message)); 
 
 client.on("message", msg => commandHandler(msg, client)) 
 
@@ -47,6 +48,6 @@ client.on("messageDelete", (messageDelete) => {
             channel.send(`Message from ${messageDelete.author.tag}: "${messageDelete.content}"  was deleted at ${messageDelete.channel}.`)
         }
     }catch(err){
-        channel.send("the most recent deleted message wasn't cached so i won't be logged")
+        channel.send("the most recent deleted message wasn't cached so it can't be logged")
     }
 }); 
