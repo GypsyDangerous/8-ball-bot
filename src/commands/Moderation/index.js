@@ -1,10 +1,17 @@
-const middleware = (msg, config) => {
-    const modRole = config.moderatorRole
-    if (!msg.member._roles.includes(modRole) && !msg.member.permissions.any(["ADMINISTRATOR"])){
+const { Permissions } = require("discord.js");
+
+const modWare = (msg, args, client, config, modPerms, cb) => {
+    // this try catch is required due to a bug in discordjs v12
+    try{
+        if (msg.member.permissions.any(modPerms)){
+            cb(msg, args, client, config)
+        }else{
+            msg.channel.send("you don't have permission to use this command")
+            return false
+        }
+    }catch(err){
         msg.channel.send("you don't have permission to use this command")
-        return false
     }
-    return true
 }
 
 const clear = require("./clear")
@@ -14,9 +21,10 @@ const {mute, unmute} = require("./Mute")
 
 
 module.exports = {
-    clear: (msg, args, client, config) => { if (middleware(msg, config)) clear(msg, args, client, config)},
-    thisdot: (msg, args, client, config) => { if (middleware(msg, config)) thisdot(msg, args, client, config)},
-    settings: (msg, args, client, config) => { if (middleware(msg, config)) settings(msg, args, client, config)},
-    mute: (msg, args, client, config) => { if (middleware(msg, config)) mute(msg, args, client, config)},
-    unmute: (msg, args, client, config) => { if (middleware(msg, config)) unmute(msg, args, client, config)},
+    modWare,
+    clear,
+    thisdot,
+    settings,
+    mute,
+    unmute,
 }

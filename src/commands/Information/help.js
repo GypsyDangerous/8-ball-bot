@@ -1,10 +1,20 @@
 const {stripIndents} = require("common-tags")
 const { MessageEmbed} = require("discord.js")
+const {capitalize} = require("../../functions")
 
-module.exports = async (msg, {args, functions}) => {
+module.exports = async (msg, {args, functions, config}) => {
     if(args.length === 0){    
+        let Available = Object.keys(functions).filter(key => !functions[key].isMod).join("`, `")
+        try{
+            if(msg.member.permissions.any(config.modPerms)){
+                Available = Object.keys(functions).join("`, `")
+            }
+        }catch(err){
+            // console.log(err.message)
+        }
         let commands = stripIndents`The Available commands are:
-        ${"`" + Object.keys(functions).join("`, `") + "`"}
+        
+        ${"`" + Available + "`"}
         
         tip: type ${"`!help <command>`"} for help that command`
         msg.channel.send(commands)
@@ -14,7 +24,7 @@ module.exports = async (msg, {args, functions}) => {
         if(helptext){
             helptext = helptext.helptext
             const embedHelpText = new MessageEmbed()
-                .setTitle(args[0])
+                .setTitle(capitalize(args[0]))
                 .setColor(msg.member.displayHexColor === "#000000" ? "#FFFFFF" : msg.member.displayHexColor)
                 .addField("description", helptext.description)
                 .addFields(
