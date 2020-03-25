@@ -1,1 +1,14 @@
-{"689872791331405900":{"prefix":"!","botTalkId":"690701673844310046","moderatorRole":"689902231734190129","mutedRole":"690421149380902942","verboseModeration":false,"modPerms":["ADMINISTRATOR","MAMGE_SERVER"]}}
+{
+    "689872791331405900": {
+        "prefix": "!",
+        "botTalkId": "690701673844310046",
+        "moderatorRole": "689902231734190129",
+        "mutedRole": "690421149380902942",
+        "verboseModeration": false,
+        "modPerms": [
+            "ADMINISTRATOR",
+            "MANAGE_SERVER",
+            "MANAGE_CHANNELS"
+        ]
+    }
+}

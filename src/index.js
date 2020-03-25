@@ -1,5 +1,5 @@
 const discord = require("discord.js")
-const commandHandler = require("./commands")
+const {commandHandler, loadCommands} = require("./managers")
 require("dotenv").config()
 
 const fs = require("fs")
@@ -8,10 +8,12 @@ const path = require("path")
 const configPath = path.join(__dirname, "..", "..", "config.json")
 
 const client = new discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+client.config = require("../config.json")
+client.commands = new discord.Collection()
 
 client.once("ready", async () => {
     console.log("bot ready")
-    // const channel = await client.channels.cache.array().filter(ch => ch.id === "689872895849267302")[0].send("I'm Online")
+    loadCommands(client)
 })
 
 client.login(process.env.BOT_TOKEN) 

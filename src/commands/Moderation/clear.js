@@ -1,7 +1,8 @@
-const {isNumeric} = require("../../functions")
+const {Command} = require("../../functions")
+const { isNumeric } = require("../../functions")
 
-module.exports = async (msg, {args}, client, config) => {
-
+const clear = async (msg, args, client) => {
+    const config = client.guildConfig
     // let amount = Math.min(Math.max(Number(args.shift()), 1), 100)
     let amount = Number(args.shift())
     if(!isNumeric(amount)){
@@ -19,3 +20,11 @@ module.exports = async (msg, {args}, client, config) => {
         msg.channel.send(`cleared ${amount} messages`)
     }
 }
+
+module.exports = new Command(
+    clear,
+    "deletes all messages up to a given amount (100 max)",
+    ["clear <amount>"],
+    "Moderation",
+    true
+)

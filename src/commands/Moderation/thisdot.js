@@ -2,9 +2,10 @@ const ytdl = require('ytdl-core');
 
 const voice_channel_id = "690338225994465450"
 
+const { Command } = require("../../functions")
 let dispatcher
 
-module.exports = async (msg, {args}, client) => {
+const thisdot = async (msg, args, client) => {
     const channels = (client.channels.cache.array())
     // const channel = channels.find(ch => ch.id == voice_channel_id);
     const channel = msg.member.voice.channel
@@ -32,3 +33,11 @@ module.exports = async (msg, {args}, client) => {
         await msg.channel.send(`This dot already running in ${client.voice.connections.array()[0].channel}`)
     }
 }
+
+module.exports = new Command(
+    thisdot,
+    "Enters a voice chat and plays this song, will be removed from the removed from the server if leave is executed",
+    ["thisdot", "thisdot leave"],
+    "Fun",
+    true
+)

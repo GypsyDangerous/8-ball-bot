@@ -1,5 +1,6 @@
 const days = millis => (millis * (60 * 60 * 24 * 1000))
 
+const { Command } = require("../../functions")
 const {isNumeric} = require("../../functions")
 const fs = require("fs")
 const path = require("path")
@@ -13,7 +14,7 @@ const reminders = JSON.parse(fs.readFileSync(jsonPath, "utf-8"))
 
 
 
-module.exports = async (msg, {args}, client) => {
+const remind = async (msg, args, client) => {
     if(args.length === 0){
         return msg.channel.send("Who should I remind?")
     }
@@ -35,3 +36,10 @@ module.exports = async (msg, {args}, client) => {
         msg.channel.send(`${member.user}, you need to ${args.join(" ")}`)
     }, time)
 }
+
+module.exports = new Command(
+    remind,
+    "sets a reminder that will mention the chosen user after a set period of time",
+    ["remind <username> <time> <reminder>"],
+    "Utility"
+)

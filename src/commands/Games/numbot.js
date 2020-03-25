@@ -1,5 +1,6 @@
 const { isNumeric } = require("../../functions")
 
+const { Command } = require("../../functions")
 let high = 100
 let status = false
 let thought = Math.ceil(Math.random()*high)
@@ -63,7 +64,7 @@ const guessCommands = {
 }
 
 
-module.exports = async (msg, {args}) => {
+const numbot = async (msg, args) => {
     let action = args.shift()
 
     const validActions = Object.keys(guessCommands)
@@ -85,3 +86,10 @@ module.exports = async (msg, {args}) => {
         msg.channel.send("Numbot offline, type !numbot start to start me up")
     }
 }
+
+module.exports = new Command(
+    numbot,
+    "a bot that thinks of a number that you have to guess",
+    ["numbot start", "numbot start <multiplier>", "numbot guess <guess>", "numbot status", "numbot stop"],
+    "Game, Bot"
+)

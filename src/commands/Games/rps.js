@@ -1,9 +1,9 @@
 const { isNumeric, randomChoice } = require("../../functions")
 const { MessageEmbed } = require("discord.js")
 
+const {Command} = require("../../functions")
 
-
-module.exports = async (msg, {args}) => {
+const rps = async (msg, args) => {
     const options = ["rock", "paper", "scissors"]
 
     if (args.length === 0 || !options.includes(args[0].toLowerCase())) {
@@ -54,3 +54,5 @@ module.exports = async (msg, {args}) => {
     msg.channel.send(response) 
 
 }
+
+module.exports = new Command(rps, "play rock, paper, scissors with the bot", [`rps rock || paper || scissors`], "Game")

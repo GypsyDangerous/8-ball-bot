@@ -1,7 +1,8 @@
 const discord = require("discord.js")
 const {formatFromNow} = require("../../functions")
 
-module.exports = async (msg, {args}) => {
+const { Command } = require("../../functions")
+const userinfo = async (msg, args) => {
     let member
     if(args.length === 0){
         member = msg.member
@@ -52,3 +53,5 @@ module.exports = async (msg, {args}) => {
 
     msg.channel.send(embed)
 }
+
+module.exports = new Command(userinfo, "returns info about the message sender or given username", ["userinfo", "userinfo <username>"], "Information")

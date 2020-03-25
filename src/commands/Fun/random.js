@@ -5,9 +5,9 @@ const emoji = "🎢 🕕 🎩 📡 ☯ 🔦 🖱 🎅 ⚛ 👽 ♐️ ⏩ 💔 �
 
 const apiLink = "https://meme-api.herokuapp.com/gimme"
 
+const {Command} = require("../../functions")
 
-
-module.exports = async (msg, {args}, client) => {
+const random = async (msg, args, client) => {
     
     let mult = 1
     if(args.length === 0){
@@ -28,6 +28,11 @@ module.exports = async (msg, {args}, client) => {
         mult = Math.E
     }
     msg.channel.send(`\`${Math.random() * mult}\``)
-
-
 }
+
+module.exports = new Command(
+    random,
+    "if no arguments are given I'll give you a random number between 0 and 1 but if you give me an argument I'll multiply my return value by that argument",
+    ["random", "random <multiplier>", "random 'pi'", "random 'e'", "random meme", "random emoji"],
+    "Fun"
+)

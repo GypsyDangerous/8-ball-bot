@@ -16,12 +16,14 @@ const results = [
     'Very doubtful'
 ]
 
-const {randomChoice} = require("../../functions") 
+const {randomChoice, Command} = require("../../functions") 
 
-module.exports = async (msg, {args}) => {
+const eightball = async (msg, args) => {
     if(args.length > 0){
         msg.channel.send(`${msg.author} ${randomChoice(results)} :8ball:`)
     }else{
         msg.channel.send("Invalid Question")
     }
 }
+
+module.exports = new Command(eightball, "ask my 8 ball a question and get a prediction", ["8ball <question>"], "Game")
